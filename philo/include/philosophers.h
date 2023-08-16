@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2023/08/09 22:16:38 by musenov          ###   ########.fr       */
+/*   Updated: 2023/08/12 14:06:13 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,39 +21,24 @@
 
 typedef struct s_data
 {
-	int				num_ph;
-	int				tt_die;
-	int				tt_eat;
-	int				tt_sleep;
-	int				num_must_eat;
-	long int		begin_time;
+	int		nr_of_philos;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		nr_must_eat;
 }	t_data;
-
-typedef struct s_philo
-{
-	int				num;
-	int				count_eat;
-	int				*died;
-	int				flag;
-	int				last_eat;
-	int				eat_all;
-	pthread_t		*th;
-	pthread_mutex_t	*fork;
-	pthread_mutex_t	message;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*left_fork;
-	t_data			d_dinner;
-}	t_philo;
-
-
 
 // main.c
 
-int		main(void);
+int		main(int argc, char **argv);
 
 // parser.c
 
-int		function_test(int a, int b);
+void	init_data(int argc, char **argv, t_data *data);
+int		ft_atoi(const char *str);
 
+// utils.c
+
+void	exit_wrong_nr_params(void);
 
 #endif

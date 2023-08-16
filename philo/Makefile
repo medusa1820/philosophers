@@ -11,6 +11,7 @@ LDFLAGS				+=	-fsanitize=address
 
 SRCS				:=	./src/main.c \
 						./src/parser.c \
+						./src/utils.c \
 						
 
 HEADERS				:=	-I ../../LeakSanitizer
@@ -38,6 +39,6 @@ clean:
 
 check:
 	@valgrind	
-				./philosophers 5 500 200 150
+				./philo 5 500 200 150
 
 .PHONY: all clean fclean re check

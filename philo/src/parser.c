@@ -6,11 +6,12 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:00:30 by musenov           #+#    #+#             */
-/*   Updated: 2023/08/13 18:06:52 by musenov          ###   ########.fr       */
+/*   Updated: 2023/08/26 16:32:55 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+// #include "../include/philosophers.h"
+#include "philosophers.h"
 
 void	init_data(int argc, char **argv, t_data *data)
 {
@@ -21,6 +22,9 @@ void	init_data(int argc, char **argv, t_data *data)
 	data->nr_must_eat = 0;
 	if (argc == 6)
 		data->nr_must_eat = ft_atoi(argv[5]);
+	data->philo = malloc(sizeof(t_philo) * data->nr_of_philos);
+	data->fork = malloc(sizeof(t_fork) * data->nr_of_philos);
+	data->philo->a = 10;
 }
 
 int	ft_atoi(const char *str)
@@ -76,6 +80,8 @@ void	init_stack(char **input, struct s_2stacks *two_stacks, int *nr_nodes)
 }
 
 */
+
+
 
 /*
 

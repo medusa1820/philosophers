@@ -9,10 +9,10 @@ CFLAGS				+=	-fsanitize=address
 LDFLAGS				:=	-g3
 LDFLAGS				+=	-fsanitize=address
 
-SRCS				:=	./src/main.c \
+SRCS				:=	./main.c \
 						./src/parser.c \
 						./src/utils.c \
-						
+						./src/spawn_threads.c \
 
 HEADERS				:=	-I ../../LeakSanitizer
 HEADERS				+=	-I ./include

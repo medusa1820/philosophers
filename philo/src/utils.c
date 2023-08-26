@@ -6,16 +6,25 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:50:42 by musenov           #+#    #+#             */
-/*   Updated: 2023/08/12 14:30:59 by musenov          ###   ########.fr       */
+/*   Updated: 2023/08/26 16:31:37 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+// #include "../include/philosophers.h"
+#include "philosophers.h"
 
 void	exit_wrong_nr_params(void)
 {
 	printf("wrong number of parameters\n");
 	exit(1);
+}
+
+void	free_data(t_data data)
+{
+	if (data.philo)
+		free(data.philo);
+	if (data.fork)
+		free(data.fork);
 }
 
 /*

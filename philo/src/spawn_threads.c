@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 15:18:16 by musenov           #+#    #+#             */
-/*   Updated: 2023/08/26 16:15:53 by musenov          ###   ########.fr       */
+/*   Updated: 2023/08/30 19:24:44 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	spawn_threads(t_data *data)
 {
-	pthread_create(&data->philo[0].thread_philo, NULL, \
-					&routine, &data->philo[0]);
+	int	i;
+
+	i = 0;
+	while (i < data->nr_of_philos)
+		pthread_create(&data->philo[i++].thread_philo, NULL, \
+						&routine, &data->philo[0]);
 }
 
 void	*routine(void *ph)

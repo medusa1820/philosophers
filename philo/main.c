@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:58:30 by musenov           #+#    #+#             */
-/*   Updated: 2023/08/26 21:19:14 by musenov          ###   ########.fr       */
+/*   Updated: 2023/08/30 21:11:12 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	int		i;
 
 	if (argc < 5 || argc > 6)
 		exit_wrong_nr_params();
 	init_data(argc, argv, &data);
 	spawn_threads(&data);
-	pthread_join(data.philo->thread_philo, NULL);
+	i = 0;
+	while (i < data.nr_of_philos)
+		pthread_join(data.philo[i++].thread_philo, NULL);
 	print_t_data(data);
 	free_data(data);
 	return (0);
 }
-
-
-
 
 void	print_t_data(t_data data)
 {

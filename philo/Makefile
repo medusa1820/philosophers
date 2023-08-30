@@ -3,21 +3,21 @@ NAME				:=	philo
 CC					:=	gcc
 
 CFLAGS				:=	-Wall -Werror -Wextra
-CFLAGS				+=	-g3
-CFLAGS				+=	-fsanitize=address
+CFLAGS				+=	-g
+# CFLAGS				+=	-fsanitize=address
 
-LDFLAGS				:=	-g3
-LDFLAGS				+=	-fsanitize=address
+LDFLAGS				:=	-g
+# LDFLAGS				+=	-fsanitize=address
 
 SRCS				:=	./main.c \
 						./src/parser.c \
 						./src/utils.c \
 						./src/spawn_threads.c \
 
-HEADERS				:=	-I ../../LeakSanitizer
+# HEADERS				:=	-I ../../LeakSanitizer
 HEADERS				+=	-I ./include
 
-LDFLAGS				+=	-L ../../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next
+# LDFLAGS				+=	-L ../../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next
 
 OBJS				:=	$(SRCS:.c=.o)
 
@@ -38,7 +38,6 @@ clean:
 	rm -f $(OBJS)
 
 check:
-	@valgrind	
-				./philo 5 500 200 150
+	@valgrind	./philo 5 500 200 150
 
 .PHONY: all clean fclean re check

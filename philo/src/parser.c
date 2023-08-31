@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:00:30 by musenov           #+#    #+#             */
-/*   Updated: 2023/08/30 19:24:41 by musenov          ###   ########.fr       */
+/*   Updated: 2023/08/31 18:34:42 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	init_data(int argc, char **argv, t_data *data)
 	data->philo[0].a = 10;
 	i = 0;
 	while (i < data->nr_of_philos)
+	{
 		pthread_mutex_init(&data->fork[i++].mutex_fork, NULL);
+		pthread_mutex_init(&data->mutex_is_dead, NULL);
+	}
 	
 }
 
@@ -86,8 +89,6 @@ void	init_stack(char **input, struct s_2stacks *two_stacks, int *nr_nodes)
 }
 
 */
-
-
 
 /*
 

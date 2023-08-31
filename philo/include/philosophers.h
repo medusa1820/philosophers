@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2023/08/26 16:31:43 by musenov          ###   ########.fr       */
+/*   Updated: 2023/08/31 18:35:51 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,21 @@ typedef struct s_forks
 typedef struct s_philos
 {
 	pthread_t		thread_philo;
+	bool			is_dead;
 	int				a;
 }	t_philo;
 
 typedef struct s_data
 {
-	int			nr_of_philos;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			nr_must_eat;
-	t_philo		*philo;
-	t_fork		*fork;
+	int				nr_of_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				nr_must_eat;
+	t_philo			*philo;
+	t_fork			*fork;
+	pthread_t		thread_check_if_philo;
+	pthread_mutex_t	mutex_is_dead;
 }	t_data;
 
 // main.c
@@ -62,5 +65,6 @@ void	free_data(t_data data);
 
 void	spawn_threads(t_data *data);
 void	*routine(void *ph);
+void	*routine_check_if_philo(void *ph);
 
 #endif

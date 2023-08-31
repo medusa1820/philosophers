@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:58:30 by musenov           #+#    #+#             */
-/*   Updated: 2023/08/30 21:11:12 by musenov          ###   ########.fr       */
+/*   Updated: 2023/08/31 18:38:58 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < data.nr_of_philos)
 		pthread_join(data.philo[i++].thread_philo, NULL);
+	pthread_join(data.thread_check_if_philo, NULL);
 	print_t_data(data);
 	free_data(data);
 	return (0);

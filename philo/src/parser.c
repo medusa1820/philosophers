@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:00:30 by musenov           #+#    #+#             */
-/*   Updated: 2023/08/31 18:34:42 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/04 18:25:38 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	init_data(int argc, char **argv, t_data *data)
 		pthread_mutex_init(&data->fork[i++].mutex_fork, NULL);
 		pthread_mutex_init(&data->mutex_is_dead, NULL);
 	}
-	
 }
 
 int	ft_atoi(const char *str)

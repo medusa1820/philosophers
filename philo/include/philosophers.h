@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2023/09/06 12:07:52 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/06 22:13:52 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 typedef struct s_forks
 {
-	bool			fork;
+	bool			taken;
 	pthread_mutex_t	mutex_fork;
 }	t_fork;
 
@@ -32,14 +32,16 @@ typedef enum e_philo_is
 	SLEEPING,
 	THINKING,
 	DEAD,
-	FULL
+	FULL,
+	ALIVE
 }	t_philo_is;
 
 typedef struct s_philos
 {
 	pthread_t		thread_philo;
 	bool			is_alive;
-	t_philo_is		is;
+	t_philo_is		status;
+	int				
 	int				a;
 }	t_philo;
 
@@ -51,7 +53,7 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				nr_must_eat;
 	t_philo			*philo;
-	t_fork			*fork;
+	t_fork			*forks;
 	pthread_t		thread_check_if_philo;
 	pthread_mutex_t	mutex_is_dead;
 }	t_data;

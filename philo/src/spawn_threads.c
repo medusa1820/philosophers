@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 15:18:16 by musenov           #+#    #+#             */
-/*   Updated: 2023/09/06 12:31:04 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/06 22:15:08 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,20 @@ int	eat(t_philo *philo)
 	return (0);
 }
 
-bool	philosopher_is(EATING, t_data *data)
+bool	philo_has_taken(t_fork *forks)
 {
-	if (philo_has_taken(data))
+	
+}
+
+bool	philosopher_is(t_philo_is action, t_data *data)
+{
+	if (philo_has_taken(data->forks))
 	{
-		
+		set_philo(ALIVE, data->philo);
+		philo_busy_with(data->time_to_eat); // my_sleep
+		philo_has_eaten_one_more_time(data);
+		philo_dropped(data->forks);
+		return (true);
 	}
 	else
 		return (false);
@@ -130,7 +139,6 @@ void	*routine(void *ph)
 		if (philosopher_is(THINKING, philo))
 			break ;
 	}
-
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2023/08/31 18:35:51 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/06 12:07:52 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,20 @@ typedef struct s_forks
 	pthread_mutex_t	mutex_fork;
 }	t_fork;
 
+typedef enum e_philo_is
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	DEAD,
+	FULL
+}	t_philo_is;
+
 typedef struct s_philos
 {
 	pthread_t		thread_philo;
-	bool			is_dead;
+	bool			is_alive;
+	t_philo_is		is;
 	int				a;
 }	t_philo;
 

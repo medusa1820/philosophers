@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2023/09/06 22:13:52 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/08 22:12:57 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,32 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-typedef struct s_forks
+typedef struct s_fork
 {
 	bool			taken;
-	pthread_mutex_t	mutex_fork;
+	pthread_mutex_t	*mutex_fork;
+	t_philo			*philo;
+	t_data			*data;
 }	t_fork;
 
 typedef enum e_philo_is
 {
-	EATING,
-	SLEEPING,
-	THINKING,
+	ALIVE,
 	DEAD,
-	FULL,
-	ALIVE
-}	t_philo_is;
+	FULL
+}	t_philo_status;
 
-typedef struct s_philos
+typedef struct s_philo
 {
+	int				id;
 	pthread_t		thread_philo;
 	bool			is_alive;
-	t_philo_is		status;
-	int				
 	int				a;
+	t_fork			*forks;
+	t_data			*data;
+	t_philo_status	status;
+	pthread_mutex_t	mutex_status;
+	int				nr_has_eaten;
 }	t_philo;
 
 typedef struct s_data
@@ -52,10 +55,12 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nr_must_eat;
+	int				start_time;
 	t_philo			*philo;
 	t_fork			*forks;
 	pthread_t		thread_check_if_philo;
 	pthread_mutex_t	mutex_is_dead;
+	pthread_mutex_t	mutex_printf;
 }	t_data;
 
 // main.c

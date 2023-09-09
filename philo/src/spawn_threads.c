@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 15:18:16 by musenov           #+#    #+#             */
-/*   Updated: 2023/09/08 22:58:07 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/09 18:35:30 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,20 +156,34 @@ bool	philo_has_taken_forks(t_philo *philo)
 
 bool	philosopher_is(char *action, t_philo *philo)
 {
-	if (philo_has_taken_forks(philo))
+	if (*action == "EATING")
+	{
+		if (philo_has_taken_forks(philo))
+		{
+			set_philo_status(ALIVE, philo);
+			my_sleep(philo->data->time_to_eat);
+			philo->nr_has_eaten += 1;
+			philo_dropped_forks(philo);
+			return (true);
+		}
+		else
+			return (false);
+	}
+	else if (*action == "SLEEPING")
 	{
 		set_philo_status(ALIVE, philo);
-		my_sleep(philo->data->time_to_eat);
-		philo->nr_has_eaten += 1;
-		philo_dropped_forks(philo);
+		print_schedule(philo, "is sleeping");
+		my_sleep(philo->data->time_to_sleep);
 		return (true);
 	}
-	else
-		return (false);
+	else if (*action == "THINKING")
+	{
+		set_philo_status(ALIVE, philo);
+		print_schedule(philo, "is thinking");
+		my_sleep(philo->data->time_to_think);
+		return (true);
+	}
 }
-
-
-
 
 
 /*
@@ -186,7 +200,6 @@ void	*routine(void *ph)
 	{
 		if (philosopher_is("EATING", philo))
 			break ;
-		 // philo must first definitely eat and then only sleep if not die
 		if (philosopher_is("SLEEPING", philo))
 			break ;
 		if (philosopher_is("THINKING", philo))

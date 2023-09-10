@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 15:18:16 by musenov           #+#    #+#             */
-/*   Updated: 2023/09/10 13:46:26 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/10 21:00:38 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*routine_philo(void *ph)
 		if (philosopher_is("THINKING", philo))
 			break ;
 	}
-	return (0);
+	return (NULL);
 }
 
 void	*routine_check_philos_alive(void *ph)
@@ -41,5 +41,5 @@ void	*routine_check_philos_alive(void *ph)
 
 	philo = (t_philo *)ph;
 	printf("int a = %d\n", philo->a);
-	return (0);
+	return (NULL);
 }

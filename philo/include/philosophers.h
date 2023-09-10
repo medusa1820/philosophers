@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2023/09/10 13:39:39 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/10 20:56:49 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nr_must_eat;
-	int				start_time;
+	uint64_t		start_time;
 	pthread_t		thread_check_philos_alive;
 	pthread_mutex_t	mutex_printf;
 }	t_data;
@@ -67,18 +67,21 @@ typedef struct s_data
 // main.c
 
 int			main(int argc, char **argv);
-void		print_t_data(t_data data);
 void		spawn_threads(t_data *data);
+bool		join_threads(t_data *data);
+void		print_t_data(t_data data);
 
-// parser.c
+// init_data.c
 
 void		init_data(int argc, char **argv, t_data *data);
-void		print_schedule(t_philo *philo, char *msg);
+void		parse_input(int argc, char **argv, t_data *data);
+void		init_mutexes(t_data *data);
 
 // utils.c
 
 void		exit_wrong_nr_params(void);
 void		free_data(t_data data);
+void		print_schedule(t_philo *philo, char *msg);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_atoi(const char *str);
 

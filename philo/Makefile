@@ -10,7 +10,7 @@ LDFLAGS				:=	-g
 # LDFLAGS				+=	-fsanitize=address
 
 SRCS				:=	./main.c \
-						./src/parser.c \
+						./src/init_data.c \
 						./src/routine_funcs0.c \
 						./src/routine_funcs1.c \
 						./src/routines.c \

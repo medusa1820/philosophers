@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:50:42 by musenov           #+#    #+#             */
-/*   Updated: 2023/09/10 13:45:03 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/10 19:08:08 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_schedule(t_philo *philo, char *msg)
 
 	time = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->mutex_printf);
-	printf("%lu %d %s\n", time, philo->id, msg);
+	printf("%llu %d %s\n", time, philo->id, msg);
 	pthread_mutex_unlock(&philo->data->mutex_printf);
 }
 

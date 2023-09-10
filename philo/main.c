@@ -6,11 +6,10 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:58:30 by musenov           #+#    #+#             */
-/*   Updated: 2023/09/08 12:01:02 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/10 13:36:31 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../include/philosophers.h"
 #include "philosophers.h"
 
 int	main(int argc, char **argv)
@@ -25,7 +24,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < data.nr_of_philos)
 		pthread_join(data.philo[i++].thread_philo, NULL);
-	pthread_join(data.thread_check_if_philo, NULL);
+	pthread_join(data.thread_check_philos_alive, NULL);
 	print_t_data(data);
 	free_data(data);
 	return (0);
@@ -38,4 +37,19 @@ void	print_t_data(t_data data)
 	printf("data.time_to_eat: %d\n", data.time_to_eat);
 	printf("data.time_to_sleep: %d\n", data.time_to_sleep);
 	printf("data.nr_must_eat: %d\n", data.nr_must_eat);
+}
+
+void	spawn_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nr_of_philos)
+	{
+		pthread_create(&data->philo[i].thread_philo, NULL, \
+						&routine_philo, &data->philo[i]);
+		i++;
+	}
+	pthread_create(&data->thread_check_philos_alive, NULL, \
+						&routine_check_philos_alive, &data->philo[3]);
 }

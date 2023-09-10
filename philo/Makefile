@@ -11,8 +11,11 @@ LDFLAGS				:=	-g
 
 SRCS				:=	./main.c \
 						./src/parser.c \
+						./src/routine_funcs0.c \
+						./src/routine_funcs1.c \
+						./src/routines.c \
+						./src/time.c \
 						./src/utils.c \
-						./src/spawn_threads.c \
 
 # HEADERS				:=	-I ../../LeakSanitizer
 HEADERS				+=	-I ./include

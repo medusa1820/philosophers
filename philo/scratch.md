@@ -5,81 +5,60 @@
 #include <pthread.h>
 #include <stdbool.h>
 
-typedef struct s_forks
+typedef enum e_philo_is
 {
-	bool			fork;
-	pthread_mutex_t	mutex_fork;
-}	t_fork;
+	ALIVE,
+	DEAD,
+	FULL
+}	t_philo_status;
 
-typedef struct s_philos
+typedef struct s_philo
 {
+	t_data			*data;
+	t_fork			*forks;
 	pthread_t		thread_philo;
+	int				id;
+	t_philo_status	status;
+	pthread_mutex_t	mutex_status;
+	int				nr_has_eaten;
 	int				a;
 }	t_philo;
 
-typedef struct s_data
+bool	philo_alive(t_philo *philo)
 {
-	int			nr_of_philos;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			nr_must_eat;
-	t_philo		*philo;
-	t_fork		*fork;
-}	t_data;
+	if (ft_strncmp(philo->status, ALIVE, 5))
+		return (false);
+	return (true);
+}
 
-int	ft_atoi(const char *str)
+bool	philosopher_is(char *action, t_philo *philo)
 {
-	int	i;
-	int	sign;
-	int	output;
-
-	i = 0;
-	sign = 1;
-	while ((*(str + i) >= 9 && *(str + i) <= 13) || *(str + i) == ' ')
-		i++;
-	if (*(str + i) == '-')
-		sign = -1;
-	if (*(str + i) == '-' || *(str + i) == '+')
-		i++;
-	output = 0;
-	while (*(str + i) >= '0' && *(str + i) <= '9')
+	if (ft_strncmp(action, "EATING", 6) == 0)
 	{
-		output = output * 10 + (*(str + i) - '0');
-		if (output < 0 && sign == 1)
-			return (-1);
-		if (output < 0 && sign == -1 && output != -2147483648)
-			return (0);
-		i++;
+		if (philo_has_taken_forks(philo))
+		{
+			set_philo_status(ALIVE, philo);
+			my_sleep(philo->data->time_to_eat);
+			philo->nr_has_eaten += 1;
+			philo_dropped_forks(philo);
+			return (true);
+		}
+		else
+			return (false);
 	}
-	return (output * sign);
-}
-
-void	init_data(int argc, char **argv, t_data *data)
-{
-	data->nr_of_philos = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	data->nr_must_eat = 0;
-	if (argc == 6)
-		data->nr_must_eat = ft_atoi(argv[5]);
-	data->philo = malloc(sizeof(t_philo) * data->nr_of_philos);
-	data->fork = malloc(sizeof(t_fork) * data->nr_of_philos);
-	data->philo->a = 10;
-	pthread_mutex_init(&data->fork->mutex_fork, NULL);
-}
-
-int	main(int argc, char **argv)
-{
-	t_data	data;
-
-	if (argc < 5 || argc > 6)
-		exit_wrong_nr_params();
-	init_data(argc, argv, &data);
-//	spawn_threads(&data);
-//	pthread_join(data.philo->thread_philo, NULL);
-//	print_t_data(data);
-//	free_data(data);
-	return (0);
+	else if (ft_strncmp(action, "SLEEPING", 8) == 0)
+	{
+		set_philo_status(ALIVE, philo);
+		print_schedule(philo, "is sleeping");
+		my_sleep(philo->data->time_to_sleep);
+		return (true);
+	}
+	else if (ft_strncmp(action, "THINKING", 8) == 0)
+	{
+		set_philo_status(ALIVE, philo);
+		print_schedule(philo, "is thinking");
+		return (true);
+	}
+	else
+		return (false);
 }

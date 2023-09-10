@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2023/09/08 22:12:57 by musenov          ###   ########.fr       */
+/*   Updated: 2023/09/10 13:39:39 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdbool.h>
+# include <stdint.h>
+
+typedef struct s_data	t_data;
+typedef struct s_philo	t_philo;
 
 typedef struct s_fork
 {
-	bool			taken;
-	pthread_mutex_t	*mutex_fork;
-	t_philo			*philo;
 	t_data			*data;
+	t_philo			*philo;
+	pthread_mutex_t	mutex_fork;
 }	t_fork;
 
 typedef enum e_philo_is
@@ -37,51 +40,70 @@ typedef enum e_philo_is
 
 typedef struct s_philo
 {
-	int				id;
-	pthread_t		thread_philo;
-	bool			is_alive;
-	int				a;
-	t_fork			*forks;
 	t_data			*data;
+	t_fork			*forks;
+	pthread_t		thread_philo;
+	int				id;
 	t_philo_status	status;
 	pthread_mutex_t	mutex_status;
 	int				nr_has_eaten;
+	int				a;
 }	t_philo;
 
 typedef struct s_data
 {
+	t_philo			*philo;
+	t_fork			*forks;
 	int				nr_of_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nr_must_eat;
 	int				start_time;
-	t_philo			*philo;
-	t_fork			*forks;
-	pthread_t		thread_check_if_philo;
-	pthread_mutex_t	mutex_is_dead;
+	pthread_t		thread_check_philos_alive;
 	pthread_mutex_t	mutex_printf;
 }	t_data;
 
 // main.c
 
-int		main(int argc, char **argv);
-void	print_t_data(t_data data);
+int			main(int argc, char **argv);
+void		print_t_data(t_data data);
+void		spawn_threads(t_data *data);
 
 // parser.c
 
-void	init_data(int argc, char **argv, t_data *data);
-int		ft_atoi(const char *str);
+void		init_data(int argc, char **argv, t_data *data);
+void		print_schedule(t_philo *philo, char *msg);
 
 // utils.c
 
-void	exit_wrong_nr_params(void);
-void	free_data(t_data data);
+void		exit_wrong_nr_params(void);
+void		free_data(t_data data);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			ft_atoi(const char *str);
 
-// spawn_threads.c
+// routines.c
 
-void	spawn_threads(t_data *data);
-void	*routine(void *ph);
-void	*routine_check_if_philo(void *ph);
+void		*routine_philo(void *ph);
+void		*routine_check_philos_alive(void *ph);
+
+// routine_funcs0.c
+
+bool		philo_alive(t_philo *philo);
+bool		philosopher_is(char *action, t_philo *philo);
+bool		philo_has_taken_forks(t_philo *philo);
+bool		philo_took_first_fork(t_philo *philo);
+bool		philo_took_second_fork(t_philo *philo);
+
+// routine_funcs1.c
+
+void		drop_first_fork(t_philo *philo);
+void		set_philo_status(t_philo_status status, t_philo *philo);
+void		philo_dropped_forks(t_philo *philo);
+
+// time.c
+
+void		my_sleep(int ms);
+u_int64_t	get_time(void);
 
 #endif

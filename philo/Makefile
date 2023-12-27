@@ -4,23 +4,26 @@ CC					:=	gcc
 
 CFLAGS				:=	-Wall -Werror -Wextra
 CFLAGS				+=	-g
-# CFLAGS				+=	-fsanitize=address
+CFLAGS				+=	-fsanitize=address
+# to check for data races
+# CFLAGS				+=	-fsanitize=thread
 
 LDFLAGS				:=	-g
-# LDFLAGS				+=	-fsanitize=address
+LDFLAGS				+=	-v
+LDFLAGS				+=	-fsanitize=address
 
 SRCS				:=	./main.c \
 						./src/init_data.c \
-						./src/routine_funcs0.c \
-						./src/routine_funcs1.c \
+						./src/routine_funcs.c \
 						./src/routines.c \
+						./src/set_get_funcs.c \
 						./src/time.c \
-						./src/utils.c \
+						./src/utils.c
 
-# HEADERS				:=	-I ../../LeakSanitizer
+HEADERS				:=	-I ../../LeakSanitizer
 HEADERS				+=	-I ./include
 
-# LDFLAGS				+=	-L ../../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next
+LDFLAGS				+=	-L ../../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next
 
 OBJS				:=	$(SRCS:.c=.o)
 

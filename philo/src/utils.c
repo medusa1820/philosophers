@@ -6,34 +6,50 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:50:42 by musenov           #+#    #+#             */
-/*   Updated: 2023/09/10 19:08:08 by musenov          ###   ########.fr       */
+/*   Updated: 2023/12/25 16:51:30 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	exit_wrong_nr_params(void)
+int	wrong_nr_params(void)
 {
 	printf("wrong number of parameters\n");
-	exit(1);
+	return (EXIT_FAILURE);
 }
 
-void	free_data(t_data data)
+void	destroy_and_free(t_data *data)
 {
-	if (data.philo)
-		free(data.philo);
-	if (data.forks)
-		free(data.forks);
+	int		i;
+
+	i = 0;
+	while (i < data->nr_of_philos)
+	{
+		pthread_mutex_destroy(&data->forks[i].mutex_fork);
+		pthread_mutex_destroy(&data->philo[i].mutex_status);
+		pthread_mutex_destroy(&data->philo[i].mutex_last_eat_time);
+		pthread_mutex_destroy(&data->philo[i].mutex_nr_has_eaten);
+		i++;
+	}
+	pthread_mutex_destroy(&data->mutex_printf);
+	if (data->philo)
+		free(data->philo);
+	if (data->forks)
+		free(data->forks);
 }
 
 void	print_schedule(t_philo *philo, char *msg)
 {
 	uint64_t	time;
 
-	time = get_time() - philo->data->start_time;
-	pthread_mutex_lock(&philo->data->mutex_printf);
+	time = get_time() - philo->data_from_philo->start_time;
+	pthread_mutex_lock(&philo->data_from_philo->mutex_printf);
+	// printf("\033[43mThis text will have a yellow background.\033[0m\n");
+	// "\033[0;31mdied\033[0m"
 	printf("%llu %d %s\n", time, philo->id, msg);
-	pthread_mutex_unlock(&philo->data->mutex_printf);
+	// printf("\033[43m%llu %d %s\033[43m\n", time, philo->id, msg);
+	// printf("%lu %d %s\n", time, philo->id, msg);
+	pthread_mutex_unlock(&philo->data_from_philo->mutex_printf);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -79,4 +95,3 @@ int	ft_atoi(const char *str)
 	}
 	return (output * sign);
 }
-

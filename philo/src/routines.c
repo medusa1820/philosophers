@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 15:18:16 by musenov           #+#    #+#             */
-/*   Updated: 2023/12/27 18:50:23 by musenov          ###   ########.fr       */
+/*   Updated: 2023/12/28 18:16:10 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ therefore it includes checks for if the philo is still alive
 	return (NULL);
 } */
 
-void	*routine_philo(void *ph)
+/* void	*routine_philo(void *ph)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)ph;
+	if (philo->data_from_philo->nr_of_philos == 1)
+		return (philo_took_first_fork(philo), NULL);
 	while (get_philo_status(philo) != DEAD)
 	{
 		if (philo_has_taken_forks(philo))
@@ -78,6 +80,43 @@ void	*routine_philo(void *ph)
 		print_schedule(philo, "is thinking");
 		set_philo_status(ALIVE, philo);
 		// my_sleep(100);
+	}
+	return (NULL);
+} */
+
+void	*routine_philo(void *ph)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)ph;
+	if (philo->data_from_philo->nr_of_philos == 1)
+		return (philo_took_first_fork(philo), NULL);
+	while (get_philo_status(philo) != DEAD)
+	{
+		if (get_philo_status(philo) == DEAD)
+			return (NULL);
+		philo_took_first_fork(philo);
+		if (get_philo_status(philo) == DEAD)
+			return (NULL);
+		philo_took_second_fork(philo);
+		if (get_philo_status(philo) == DEAD)
+			return (NULL);
+		print_schedule(philo, "is eating");
+		set_philo_status(EATING, philo);
+		my_sleep(philo->data_from_philo->time_to_eat);
+		set_last_eat_time(philo);
+		philo->nr_has_eaten += 1;
+		philo_dropped_forks(philo);
+		if (get_philo_status(philo) == DEAD)
+			return (NULL);
+		print_schedule(philo, "is sleeping");
+		set_philo_status(ALIVE, philo);
+		my_sleep(philo->data_from_philo->time_to_sleep);
+		if (get_philo_status(philo) == DEAD)
+			return (NULL);
+		print_schedule(philo, "is thinking");
+		set_philo_status(ALIVE, philo);
+		my_sleep(100);
 	}
 	return (NULL);
 }

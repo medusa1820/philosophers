@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:44:31 by musenov           #+#    #+#             */
-/*   Updated: 2023/12/27 18:31:22 by musenov          ###   ########.fr       */
+/*   Updated: 2023/12/28 17:57:10 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ bool	philo_took_first_fork(t_philo *philo)
 		lock_result = pthread_mutex_lock(&philo->forks_from_philo[i].mutex_fork);
 	else
 		lock_result = pthread_mutex_lock(&philo->forks_from_philo[0].mutex_fork);
-	print_schedule(philo, "has taken the first fork");
+	print_schedule(philo, "has taken a fork");
 	return (true);
 }
 
@@ -225,7 +225,7 @@ bool	philo_took_second_fork(t_philo *philo)
 		i = philo->data_from_philo->nr_of_philos - 1;
 		pthread_mutex_lock(&philo->forks_from_philo[i].mutex_fork);
 	}
-	print_schedule(philo, "has taken the second fork");
+	print_schedule(philo, "has taken a fork");
 	return (true);
 }
 

@@ -6,13 +6,13 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:58:30 by musenov           #+#    #+#             */
-/*   Updated: 2023/12/27 17:09:23 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/02 17:10:31 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char **argv)
+/* int	main(int argc, char **argv)
 {
 	t_data	data;
 	int		i;
@@ -41,6 +41,37 @@ int	main(int argc, char **argv)
 			i++;
 		}
 	}
+} */
+
+int	main(int argc, char **argv)
+{
+	t_data	data;
+	int		i;
+
+	if (argc < 5 || argc > 6)
+		return (wrong_nr_params());
+	init_data(argc, argv, &data);
+	spawn_threads(&data);
+	i = 0;
+	// while (i < data.nr_of_philos)
+	// printf("%llu\n", data.philo->last_eat_time);
+	while (1)
+	{
+		if (get_philo_status(&data.philo[i]) == DEAD)
+		{
+			if (!join_threads(&data))
+			{
+				printf("joining threads failed\n");
+				destroy_and_free(&data);
+				return (EXIT_FAILURE);
+			}
+			destroy_and_free(&data);
+			return (EXIT_SUCCESS);
+		}
+		i++;
+		if (i == data.nr_of_philos)
+			i = 0;
+	}
 }
 
 void	spawn_threads(t_data *data)
@@ -56,6 +87,9 @@ void	spawn_threads(t_data *data)
 	}
 	pthread_create(&data->thread_check_philos_alive, NULL, \
 					routine_check_philos_alive, data);
+	if (data->nr_must_eat != 0)
+		pthread_create(&data->thread_check_philos_full, NULL, \
+						routine_check_philos_full, data);
 }
 
 /* int	run_threads(t_data *data)

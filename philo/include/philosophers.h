@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2023/12/22 19:02:05 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/02 17:48:47 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_data
 	int				nr_must_eat;
 	uint64_t		start_time;
 	pthread_t		thread_check_philos_alive;
+	pthread_t		thread_check_philos_full;
 	pthread_mutex_t	mutex_printf;
 }	t_data;
 
@@ -93,6 +94,8 @@ void				philo_dropped_forks(t_philo *philo);
 
 void				*routine_philo(void *ph);
 void				*routine_check_philos_alive(void *ph);
+void				*routine_check_philos_full(void *data_struct);
+void				unlock_all_mutexes(t_philo *philo);
 
 // set_get_funcs.c
 
@@ -105,6 +108,7 @@ uint64_t			get_last_eat_time(t_philo *philo);
 
 void				my_sleep(int ms);
 u_int64_t			get_time(void);
+u_int64_t			get_time_for_schedule(void);
 
 // utils.c
 

@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 15:18:16 by musenov           #+#    #+#             */
-/*   Updated: 2023/12/28 18:16:10 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/02 18:02:41 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,35 +90,49 @@ void	*routine_philo(void *ph)
 
 	philo = (t_philo *)ph;
 	if (philo->data_from_philo->nr_of_philos == 1)
-		return (philo_took_first_fork(philo), NULL);
+		return (philo_took_first_fork(philo), unlock_all_mutexes(philo), NULL);
+	if (philo->id % 2 == 1)
+		my_sleep(2);
 	while (get_philo_status(philo) != DEAD)
 	{
+		if (!philo_took_first_fork(philo))
+			return (unlock_all_mutexes(philo), NULL);
+		if (!philo_took_second_fork(philo))
+			return (unlock_all_mutexes(philo), NULL);
 		if (get_philo_status(philo) == DEAD)
-			return (NULL);
-		philo_took_first_fork(philo);
-		if (get_philo_status(philo) == DEAD)
-			return (NULL);
-		philo_took_second_fork(philo);
-		if (get_philo_status(philo) == DEAD)
-			return (NULL);
+			return (unlock_all_mutexes(philo), NULL);
 		print_schedule(philo, "is eating");
+		set_last_eat_time(philo);
 		set_philo_status(EATING, philo);
 		my_sleep(philo->data_from_philo->time_to_eat);
-		set_last_eat_time(philo);
 		philo->nr_has_eaten += 1;
+		// if (get_philo_status(philo) == FULL)
+		// 	return (NULL);
 		philo_dropped_forks(philo);
 		if (get_philo_status(philo) == DEAD)
-			return (NULL);
+			return (unlock_all_mutexes(philo), NULL);
 		print_schedule(philo, "is sleeping");
 		set_philo_status(ALIVE, philo);
 		my_sleep(philo->data_from_philo->time_to_sleep);
 		if (get_philo_status(philo) == DEAD)
-			return (NULL);
+			return (unlock_all_mutexes(philo), NULL);
 		print_schedule(philo, "is thinking");
 		set_philo_status(ALIVE, philo);
-		my_sleep(100);
+		// usleep(100);
 	}
 	return (NULL);
+}
+
+void	unlock_all_mutexes(t_philo *philo)
+{
+	int		i;
+
+	i = 0;
+	while (i < philo->data_from_philo->nr_of_philos)
+	{
+		pthread_mutex_unlock(&philo->forks_from_philo[i].mutex_fork);
+		i++;
+	}
 }
 
 void	*routine_check_philos_alive(void *data_struct)
@@ -127,25 +141,23 @@ void	*routine_check_philos_alive(void *data_struct)
 	int		i;
 
 	data = (t_data *)data_struct;
+	i = 0;
 	while (1)
 	{
-		i = 0;
-		while (i < data->nr_of_philos)
+		if ((get_time() - get_last_eat_time(&data->philo[i])) > \
+			data->time_to_die && \
+			get_philo_status(&data->philo[i]) != EATING)
 		{
-			if ((get_time() - get_last_eat_time(&data->philo[i])) > \
-				data->time_to_die && \
-				get_philo_status(&data->philo[i]) != EATING)
-			{
-				print_schedule(&data->philo[i], "died");
-				i = 0;
-				while (i < data->nr_of_philos)
-					set_philo_status(DEAD, &data->philo[i++]);
-				return (NULL);
-			}
-			i++;
-			// my_sleep(10);
+			print_schedule(&data->philo[i], "died");
+			i = 0;
+			while (i < data->nr_of_philos)
+				set_philo_status(DEAD, &data->philo[i++]);
+			return (NULL);
 		}
-		// my_sleep(10);
+		i++;
+		if (i == data->nr_of_philos)
+			i = 0;
+		// usleep(100);
 	}
 }
 
@@ -177,3 +189,33 @@ void	*all_alive_routine(void *data_p)
 	return (NULL);
 }
 */
+
+void	*routine_check_philos_full(void *data_struct)
+{
+	t_data	*data;
+	int		i;
+	int		nr_philos_full;
+
+	data = (t_data *)data_struct;
+	i = 0;
+	nr_philos_full = 0;
+	while (1)
+	{
+		if (data->philo[i].nr_has_eaten == data->nr_must_eat && \
+			get_philo_status(&data->philo[i]) != FULL)
+		{
+			set_philo_status(FULL, &data->philo[i]);
+			nr_philos_full++;
+		}
+		if (nr_philos_full == data->nr_of_philos)
+		{
+			i = 0;
+			while (i < data->nr_of_philos)
+				set_philo_status(DEAD, &data->philo[i++]);
+			return (NULL);
+		}
+		i++;
+		if (i == data->nr_of_philos)
+			i = 0;
+	}
+}

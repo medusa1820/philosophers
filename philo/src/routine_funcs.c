@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:44:31 by musenov           #+#    #+#             */
-/*   Updated: 2023/12/28 17:57:10 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/02 12:15:18 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,11 +170,13 @@ bool	philo_took_first_fork(t_philo *philo)
 	lock_result = 0;
 	i = philo->id;
 	if (i == 0)
-		lock_result = pthread_mutex_lock(&philo->forks_from_philo[0].mutex_fork);
+		pthread_mutex_lock(&philo->forks_from_philo[0].mutex_fork);
 	else if (i != philo->data_from_philo->nr_of_philos - 1)
-		lock_result = pthread_mutex_lock(&philo->forks_from_philo[i].mutex_fork);
+		pthread_mutex_lock(&philo->forks_from_philo[i].mutex_fork);
 	else
-		lock_result = pthread_mutex_lock(&philo->forks_from_philo[0].mutex_fork);
+		pthread_mutex_lock(&philo->forks_from_philo[0].mutex_fork);
+	if (get_philo_status(philo) == DEAD)
+		return (false);
 	print_schedule(philo, "has taken a fork");
 	return (true);
 }
@@ -225,6 +227,8 @@ bool	philo_took_second_fork(t_philo *philo)
 		i = philo->data_from_philo->nr_of_philos - 1;
 		pthread_mutex_lock(&philo->forks_from_philo[i].mutex_fork);
 	}
+	if (get_philo_status(philo) == DEAD)
+		return (false);
 	print_schedule(philo, "has taken a fork");
 	return (true);
 }

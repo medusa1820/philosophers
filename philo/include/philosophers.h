@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/02 17:48:47 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/03 20:20:00 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum e_philo_is
 {
 	ALIVE,
 	DEAD,
-	FULL,
+	// FULL,
 	EATING
 }	t_philo_status;
 
@@ -46,6 +46,7 @@ typedef struct s_philo
 	pthread_t		thread_philo;
 	int				id;
 	t_philo_status	status;
+	bool			full;
 	pthread_mutex_t	mutex_status;
 	uint64_t		last_eat_time;
 	pthread_mutex_t	mutex_last_eat_time;
@@ -66,6 +67,8 @@ typedef struct s_data
 	pthread_t		thread_check_philos_alive;
 	pthread_t		thread_check_philos_full;
 	pthread_mutex_t	mutex_printf;
+	bool			stop_iterating;
+	pthread_mutex_t	mutex_stop_iterating;
 }	t_data;
 
 // main.c
@@ -96,6 +99,8 @@ void				*routine_philo(void *ph);
 void				*routine_check_philos_alive(void *ph);
 void				*routine_check_philos_full(void *data_struct);
 void				unlock_all_mutexes(t_philo *philo);
+bool				stop_iterating(t_data *data);
+void				set_stop_iterating(t_data *data);
 
 // set_get_funcs.c
 
@@ -103,6 +108,8 @@ void				set_philo_status(t_philo_status status, t_philo *philo);
 t_philo_status		get_philo_status(t_philo *philo);
 void				set_last_eat_time(t_philo *philo);
 uint64_t			get_last_eat_time(t_philo *philo);
+bool				ask_philo_full(t_philo *philo);
+void				set_philo_full(t_philo *philo);
 
 // time.c
 

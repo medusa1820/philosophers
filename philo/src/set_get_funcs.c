@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:49:54 by musenov           #+#    #+#             */
-/*   Updated: 2023/12/22 17:57:12 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/03 19:32:34 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ void	set_philo_status(t_philo_status status, t_philo *philo)
 	pthread_mutex_unlock(&philo->mutex_status);
 }
 
+void	set_philo_full(t_philo *philo)
+{
+	philo->full = true;
+}
+
 t_philo_status	get_philo_status(t_philo *philo)
 {
 	t_philo_status	status;
@@ -28,6 +33,11 @@ t_philo_status	get_philo_status(t_philo *philo)
 	status = philo->status;
 	pthread_mutex_unlock(&philo->mutex_status);
 	return (status);
+}
+
+bool	ask_philo_full(t_philo *philo)
+{
+	return (philo->full);
 }
 
 void	set_last_eat_time(t_philo *philo)

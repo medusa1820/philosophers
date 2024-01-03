@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:00:30 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/02 17:50:00 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/03 20:13:07 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,15 @@ void	init_data(int argc, char **argv, t_data *data)
 	{
 		data->philo[i].data_from_philo = data;
 		data->philo[i].forks_from_philo = data->forks;
-		data->philo[i].id = i;
+		data->philo[i].id = i + 1;
 		data->philo[i].status = ALIVE;
+		data->philo[i].full = false;
 		data->philo[i].nr_has_eaten = 0;
 		data->philo[i].last_eat_time = get_time();
 		i++;
 	}
 	data->start_time = get_time();
+	data->stop_iterating = false;
 	// data->forks->data_from_fork = data;
 	// data->forks->philo_from_fork = data->philo;
 	init_mutexes(data);

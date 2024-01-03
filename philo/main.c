@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:58:30 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/02 17:10:31 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/03 20:34:30 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 	}
 } */
 
-int	main(int argc, char **argv)
+/* int	main(int argc, char **argv)
 {
 	t_data	data;
 	int		i;
@@ -71,6 +71,37 @@ int	main(int argc, char **argv)
 		i++;
 		if (i == data.nr_of_philos)
 			i = 0;
+	}
+} */
+
+int	main(int argc, char **argv)
+{
+	t_data	data;
+	// int		i;
+
+	if (argc < 5 || argc > 6)
+		return (wrong_nr_params());
+	init_data(argc, argv, &data);
+	spawn_threads(&data);
+	// i = 0;
+	// while (i < data.nr_of_philos)
+	// printf("%llu\n", data.philo->last_eat_time);
+	while (1)
+	{
+		if (stop_iterating(&data))
+		{
+			if (!join_threads(&data))
+			{
+				printf("joining threads failed\n");
+				destroy_and_free(&data);
+				return (EXIT_FAILURE);
+			}
+			destroy_and_free(&data);
+			return (EXIT_SUCCESS);
+		}
+		// i++;
+		// if (i == data.nr_of_philos)
+		// 	i = 0;
 	}
 }
 

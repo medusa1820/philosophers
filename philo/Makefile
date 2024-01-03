@@ -2,15 +2,15 @@ NAME				:=	philo
 
 CC					:=	gcc
 
-CFLAGS				:=	-Wall -Werror -Wextra
-# CFLAGS				+=	-g
-CFLAGS				+=	-lpthread
+CFLAGS				:=	-Wall -Werror -Wextra -g
+# CFLAGS				+=	-g -fsanitize=thread
+# CFLAGS				+=	-pthread
 # CFLAGS				+=	-fsanitize=address
 # to check for data races
 # CFLAGS				+=	-fsanitize=thread
 
-# LDFLAGS				:=	-g
-LDFLAGS				+=	-lpthread
+# LDFLAGS				:=	-g -fsanitize=thread
+LDFLAGS				+=	-lpthread -g
 # LDFLAGS				+=	-v
 # LDFLAGS				+=	-fsanitize=address
 
@@ -22,7 +22,7 @@ SRCS				:=	./main.c \
 						./src/time.c \
 						./src/utils.c
 
-HEADERS				:=	-I ../../LeakSanitizer
+# HEADERS				:=	-I ../../LeakSanitizer
 HEADERS				+=	-I ./include
 
 # LDFLAGS				+=	-L ../../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next

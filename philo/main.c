@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:58:30 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/03 20:34:30 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/04 00:24:06 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,23 @@ int	main(int argc, char **argv)
 	// i = 0;
 	// while (i < data.nr_of_philos)
 	// printf("%llu\n", data.philo->last_eat_time);
-	while (1)
+	if (!join_threads(&data))
 	{
-		if (stop_iterating(&data))
-		{
-			if (!join_threads(&data))
-			{
-				printf("joining threads failed\n");
-				destroy_and_free(&data);
-				return (EXIT_FAILURE);
-			}
-			destroy_and_free(&data);
-			return (EXIT_SUCCESS);
-		}
-		// i++;
-		// if (i == data.nr_of_philos)
-		// 	i = 0;
+		printf("joining threads failed\n");
+		destroy_and_free(&data);
+		return (EXIT_FAILURE);
 	}
+	destroy_and_free(&data);
+	return (EXIT_SUCCESS);
+	// while (1)
+	// {
+	// 	if (stop_iterating(&data))
+	// 	{
+	// 	}
+	// 	// i++;
+	// 	// if (i == data.nr_of_philos)
+	// 	// 	i = 0;
+	// }
 }
 
 void	spawn_threads(t_data *data)
@@ -150,17 +150,21 @@ void	spawn_threads(t_data *data)
 bool	join_threads(t_data *data)
 {
 	int	i;
+	int	is_failed;
 
 	i = 0;
+	is_failed = true;
 	if (pthread_join(data->thread_check_philos_alive, NULL))
-		return (false);
+		is_failed = false;
+	if ((data->nr_must_eat != 0) && pthread_join(data->thread_check_philos_full, NULL))
+		is_failed = false;
 	while (i < data->nr_of_philos)
 	{
 		if (pthread_join(data->philo[i].thread_philo, NULL))
-			return (false);
+			is_failed = false;
 		i++;
 	}
-	return (true);
+	return (is_failed);
 }
 
 /* void	print_t_data(t_data data)

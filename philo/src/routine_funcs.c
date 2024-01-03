@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_funcs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:44:31 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/03 22:44:04 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/04 00:37:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ bool	philo_took_first_fork(t_philo *philo)
 		pthread_mutex_unlock(&philo->forks_from_philo[which_mutex].mutex_fork);
 		return (false);
 	}
-	print_schedule(philo, "has taken first fork");
+	print_schedule(philo, "has taken a fork");
 	return (true);
 }
 
@@ -251,7 +251,7 @@ bool	philo_took_second_fork(t_philo *philo)
 			pthread_mutex_unlock(&philo->forks_from_philo[0].mutex_fork);
 		return (false);
 	}
-	print_schedule(philo, "has taken second fork");
+	print_schedule(philo, "has taken a fork");
 	return (true);
 }
 

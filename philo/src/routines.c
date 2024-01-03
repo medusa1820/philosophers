@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 15:18:16 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/03 20:31:02 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/03 22:25:48 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,30 +96,35 @@ void	*routine_philo(void *ph)
 	while (get_philo_status(philo) != DEAD)
 	{
 		if (!philo_took_first_fork(philo))
-			return (unlock_all_mutexes(philo), NULL);
+			// return (unlock_all_mutexes(philo), NULL);
+			return (NULL);
 		if (!philo_took_second_fork(philo))
-			return (unlock_all_mutexes(philo), NULL);
+			// return (unlock_all_mutexes(philo), NULL);
+			return (NULL);
 		// if (get_philo_status(philo) == DEAD)
-		if (stop_iterating(philo->data_from_philo))
-			return (unlock_all_mutexes(philo), NULL);
 		print_schedule(philo, "is eating");
+		philo->nr_has_eaten += 1;
 		set_last_eat_time(philo);
 		set_philo_status(EATING, philo);
+		if (stop_iterating(philo->data_from_philo))
+			// return (unlock_all_mutexes(philo), NULL);
+			return (NULL);
 		my_sleep(philo->data_from_philo->time_to_eat);
-		philo->nr_has_eaten += 1;
 		philo_dropped_forks(philo);
 		// if (get_philo_status(philo) == DEAD)
 		if (stop_iterating(philo->data_from_philo))
-			return (unlock_all_mutexes(philo), NULL);
+			// return (unlock_all_mutexes(philo), NULL);
+			return (NULL);
 		print_schedule(philo, "is sleeping");
 		set_philo_status(ALIVE, philo);
 		my_sleep(philo->data_from_philo->time_to_sleep);
 		// if (get_philo_status(philo) == DEAD)
 		if (stop_iterating(philo->data_from_philo))
-			return (unlock_all_mutexes(philo), NULL);
+			// return (unlock_all_mutexes(philo), NULL);
+			return (NULL);
 		print_schedule(philo, "is thinking");
 		set_philo_status(ALIVE, philo);
-		// usleep(100);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -161,7 +166,7 @@ void	*routine_check_philos_alive(void *data_struct)
 		i++;
 		if (i == data->nr_of_philos)
 			i = 0;
-		usleep(100);
+		// usleep(100);
 	}
 }
 

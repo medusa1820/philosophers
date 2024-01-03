@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:50:42 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/02 17:50:41 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/03 22:49:20 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_schedule(t_philo *philo, char *msg)
 	pthread_mutex_lock(&philo->data_from_philo->mutex_printf);
 	// printf("\033[43mThis text will have a yellow background.\033[0m\n");
 	// "\033[0;31mdied\033[0m"
-	printf("%llu %d %s\n", time, philo->id, msg);
+	printf("%lu %d %s\n", time, philo->id, msg);
 	// printf("\033[43m%llu %d %s\033[43m\n", time, philo->id, msg);
 	// printf("%lu %d %s\n", time, philo->id, msg);
 	pthread_mutex_unlock(&philo->data_from_philo->mutex_printf);

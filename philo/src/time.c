@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:18:55 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/03 18:02:31 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/03 21:38:14 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	my_sleep(int ms)
 	while ((now.tv_sec - start.tv_sec) * 1000 + \
 			(now.tv_usec - start.tv_usec) / 1000 < ms)
 	{
-		usleep(10);
+		usleep(100);
 		gettimeofday(&now, NULL);
 	}
 }

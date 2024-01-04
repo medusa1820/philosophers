@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 18:49:54 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/03 19:32:34 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/04 16:45:47 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,31 +56,3 @@ uint64_t	get_last_eat_time(t_philo *philo)
 	pthread_mutex_unlock(&philo->mutex_last_eat_time);
 	return (last_eat_time);
 }
-
-/* 
-void	free_data(t_data *data)
-{
-	int	i;
-	int	nb_philos;
-
-	nb_philos = get_nb_philos(data);
-	i = -1;
-	while (++i < nb_philos)
-	{
-		pthread_mutex_destroy(&data->forks[i]);
-		pthread_mutex_destroy(&data->philos[i].mut_state);
-		pthread_mutex_destroy(&data->philos[i].mut_nb_meals_had);
-		pthread_mutex_destroy(&data->philos[i].mut_last_eat_time);
-	}
-	pthread_mutex_destroy(&data->mut_die_t);
-	pthread_mutex_destroy(&data->mut_eat_t);
-	pthread_mutex_destroy(&data->mut_sleep_t);
-	pthread_mutex_destroy(&data->mut_nb_philos);
-	pthread_mutex_destroy(&data->mut_print);
-	pthread_mutex_destroy(&data->mut_keep_iter);
-	pthread_mutex_destroy(&data->mut_start_time);
-	free(data->philo_ths);
-	free(data->philos);
-	free(data->forks);
-}
-*/

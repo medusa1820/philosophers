@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:50:42 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/04 00:16:50 by htsang           ###   ########.fr       */
+/*   Updated: 2024/01/04 16:46:25 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,7 @@ void	print_schedule(t_philo *philo, char *msg)
 
 	time = get_time() - philo->data_from_philo->start_time;
 	pthread_mutex_lock(&philo->data_from_philo->mutex_printf);
-	// printf("\033[43mThis text will have a yellow background.\033[0m\n");
-	// "\033[0;31mdied\033[0m"
 	printf("%lu %d %s\n", time, philo->id, msg);
-	// printf("\033[43m%llu %d %s\033[43m\n", time, philo->id, msg);
-	// printf("%lu %d %s\n", time, philo->id, msg);
 	pthread_mutex_unlock(&philo->data_from_philo->mutex_printf);
 }
 

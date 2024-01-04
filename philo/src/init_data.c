@@ -6,29 +6,11 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:00:30 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/03 20:13:07 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/04 16:42:11 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-/* void	init_data(int argc, char **argv, t_data *data)
-{
-	int	i;
-
-	parse_input(argc, argv, data);
-	data->philo = malloc(sizeof(t_philo) * data->nr_of_philos);
-	i = 0;
-	while (i < data->nr_of_philos)
-	{
-		data->philo[i].id = i;
-		data->philo[i].status = ALIVE;
-		i++;
-	}
-	data->forks = malloc(sizeof(t_fork) * data->nr_of_philos);
-	init_mutexes(data);
-	data->start_time = get_time();
-} */
 
 /*
 
@@ -84,44 +66,8 @@ void	init_data(int argc, char **argv, t_data *data)
 	}
 	data->start_time = get_time();
 	data->stop_iterating = false;
-	// data->forks->data_from_fork = data;
-	// data->forks->philo_from_fork = data->philo;
 	init_mutexes(data);
 }
-
-/* void	init_data(int argc, char **argv, t_data *data)
-{
-	int	i;
-	int	j;
-
-	parse_input(argc, argv, data);
-	data->philo = malloc(sizeof(t_philo) * data->nr_of_philos);
-	i = 0;
-	while (i < data->nr_of_philos)
-	{
-		data->philo[i].id = i;
-		data->philo[i].status = ALIVE;
-		data->philo[i].nr_has_eaten = 0;
-		i++;
-	}
-	data->forks = malloc(sizeof(t_fork) * data->nr_of_philos);
-	data->start_time = get_time();
-	data->philo->data_from_philo = data;
-	data->forks->data_from_fork = data;
-	i = 0;
-	while (i < data->nr_of_philos)
-	{
-		j = 0;
-		while (j < data->nr_of_philos)
-		{
-			data->philo[i].forks_from_philo[j] = data->forks[j];
-			data->forks[i].philo_from_fork[j] = data->philo[j];
-			j++;
-		}
-		i++;
-	}
-	init_mutexes(data);
-} */
 
 void	parse_input(int argc, char **argv, t_data *data)
 {
@@ -143,16 +89,11 @@ void	init_mutexes(t_data *data)
 	i = 0;
 	while (i < data->nr_of_philos)
 	{
-		if (pthread_mutex_init(&data->forks[i].mutex_fork, NULL) != 0)
-			printf("mutex_fork for fork[%d] initialization failed\n", i);
-		if (pthread_mutex_init(&data->philo[i].mutex_status, NULL) != 0)
-			printf("mutex_status for philo[%d] initialization failed\n", i);
-		if (pthread_mutex_init(&data->philo[i].mutex_last_eat_time, NULL) != 0)
-			printf("mutex_last_eat_time for philo[%d] initialization failed\n", i);
-		if (pthread_mutex_init(&data->philo[i].mutex_nr_has_eaten, NULL) != 0)
-			printf("mutex_nr_has_eaten for philo[%d] initialization failed\n", i);
+		pthread_mutex_init(&data->forks[i].mutex_fork, NULL);
+		pthread_mutex_init(&data->philo[i].mutex_status, NULL);
+		pthread_mutex_init(&data->philo[i].mutex_last_eat_time, NULL);
+		pthread_mutex_init(&data->philo[i].mutex_nr_has_eaten, NULL);
 		i++;
 	}
-	if (pthread_mutex_init(&data->mutex_printf, NULL) != 0)
-		printf("mutex_nr_has_eaten for philo[%d] initialization failed\n", i);
+	pthread_mutex_init(&data->mutex_printf, NULL);
 }

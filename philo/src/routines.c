@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 15:18:16 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/04 16:50:29 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/04 18:04:07 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ void	*routine_philo(void *ph)
 
 	philo = (t_philo *)ph;
 	if (philo->data_from_philo->nr_of_philos == 1)
-		return (philo_took_first_fork(philo), unlock_all_mutexes(philo), NULL);
+		return (philo_took_first_fork(philo), philo_drop_fork(philo), NULL);
 	if (philo->id % 2 == 1)
 		my_sleep(philo->data_from_philo->time_to_eat / 2);
 	while (get_philo_status(philo) != DEAD)
 	{
 		if (!philo_took_first_fork(philo))
-			// return (unlock_all_mutexes(philo), NULL);
 			return (NULL);
 		if (!philo_took_second_fork(philo))
 			return (NULL);
@@ -33,7 +32,7 @@ void	*routine_philo(void *ph)
 		set_last_eat_time(philo);
 		set_philo_status(EATING, philo);
 		if (stop_iterating(philo->data_from_philo))
-			return (philo_dropped_forks(philo), NULL); //////////////
+			return (philo_dropped_forks(philo), NULL);
 		my_sleep(philo->data_from_philo->time_to_eat);
 		philo_dropped_forks(philo);
 		if (stop_iterating(philo->data_from_philo))

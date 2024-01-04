@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:58:30 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/04 16:38:21 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/04 17:51:24 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ bool	join_threads(t_data *data)
 	is_failed = true;
 	if (pthread_join(data->thread_check_philos_alive, NULL))
 		is_failed = false;
-	if ((data->nr_must_eat != 0) && pthread_join(data->thread_check_philos_full, NULL))
+	if ((data->nr_must_eat != 0) && \
+		pthread_join(data->thread_check_philos_full, NULL))
 		is_failed = false;
 	while (i < data->nr_of_philos)
 	{

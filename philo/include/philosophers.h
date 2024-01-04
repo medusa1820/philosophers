@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/03 20:20:00 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/04 18:04:31 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void				init_data(int argc, char **argv, t_data *data);
 void				parse_input(int argc, char **argv, t_data *data);
 void				init_mutexes(t_data *data);
 
-// routine_funcs0.c
+// routine_funcs.c
 
 bool				philosopher_is(char *action, t_philo *philo);
 bool				philo_has_taken_forks(t_philo *philo);
@@ -92,6 +92,7 @@ bool				philo_took_first_fork(t_philo *philo);
 bool				philo_took_second_fork(t_philo *philo);
 void				drop_first_fork(t_philo *philo);
 void				philo_dropped_forks(t_philo *philo);
+void				philo_drop_fork(t_philo *philo);
 
 // routines.c
 

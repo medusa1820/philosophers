@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:58:30 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/04 17:51:24 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 12:59:21 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	main(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 		return (wrong_nr_params());
-	init_data(argc, argv, &data);
+	if (!init_data_succeeded(argc, argv, &data))
+		return (EXIT_FAILURE);
 	spawn_threads(&data);
 	if (!join_threads(&data))
 	{

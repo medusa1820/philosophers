@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/04 18:04:31 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 13:16:12 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef enum e_philo_is
 {
 	ALIVE,
 	DEAD,
-	// FULL,
 	EATING
 }	t_philo_status;
 
@@ -58,11 +57,11 @@ typedef struct s_data
 {
 	t_philo			*philo;
 	t_fork			*forks;
-	int				nr_of_philos;
+	long			nr_of_philos;
 	uint64_t		time_to_die;
 	uint64_t		time_to_eat;
 	uint64_t		time_to_sleep;
-	int				nr_must_eat;
+	long			nr_must_eat;
 	uint64_t		start_time;
 	pthread_t		thread_check_philos_alive;
 	pthread_t		thread_check_philos_full;
@@ -80,8 +79,10 @@ void				print_t_data(t_data data);
 
 // init_data.c
 
-void				init_data(int argc, char **argv, t_data *data);
-void				parse_input(int argc, char **argv, t_data *data);
+// void				init_data(int argc, char **argv, t_data *data);
+bool				init_data_succeeded(int argc, char **argv, t_data *data);
+// void				parse_input(int argc, char **argv, t_data *data);
+bool				parse_input_succeedeed(int argc, char **argv, t_data *data);
 void				init_mutexes(t_data *data);
 
 // routine_funcs.c
@@ -124,6 +125,7 @@ int					wrong_nr_params(void);
 void				destroy_and_free(t_data *data);
 void				print_schedule(t_philo *philo, char *msg);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-int					ft_atoi(const char *str);
+// int					ft_atoi(const char *str);
+long					ft_atoi_philo(const char *str, bool *wrong_input);
 
 #endif

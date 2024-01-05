@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:00:30 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/04 16:42:11 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 13:03:19 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ that this function is correctly implemented.
 
 */
 
-void	init_data(int argc, char **argv, t_data *data)
+// void	init_data(int argc, char **argv, t_data *data)
+bool	init_data_succeeded(int argc, char **argv, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	parse_input(argc, argv, data);
+	if (!parse_input_succeedeed(argc, argv, data))
+		return (false);
 	data->philo = malloc(sizeof(t_philo) * data->nr_of_philos);
 	data->forks = malloc(sizeof(t_fork) * data->nr_of_philos);
 	while (i < data->nr_of_philos)
@@ -67,19 +69,29 @@ void	init_data(int argc, char **argv, t_data *data)
 	data->start_time = get_time();
 	data->stop_iterating = false;
 	init_mutexes(data);
+	return (true);
 }
 
-void	parse_input(int argc, char **argv, t_data *data)
+// void	parse_input(int argc, char **argv, t_data *data)
+bool	parse_input_succeedeed(int argc, char **argv, t_data *data)
 {
-	data->nr_of_philos = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
+	bool	wrong_input;
+
+	wrong_input = false;
+	data->nr_of_philos = ft_atoi_philo(argv[1], &wrong_input);
+	data->time_to_die = ft_atoi_philo(argv[2], &wrong_input);
+	data->time_to_eat = ft_atoi_philo(argv[3], &wrong_input);
+	data->time_to_sleep = ft_atoi_philo(argv[4], &wrong_input);
 	if (argc == 6)
-		data->nr_must_eat = ft_atoi(argv[5]);
+		data->nr_must_eat = ft_atoi_philo(argv[5], &wrong_input);
 	else
 		data->nr_must_eat = 0;
-	//check if the inputs are numrical and non-negative
+	if (wrong_input)
+	{
+		printf("input parameter(s) wrong\n");
+		return (false);
+	}
+	return (true);
 }
 
 void	init_mutexes(t_data *data)

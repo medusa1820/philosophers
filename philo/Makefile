@@ -3,16 +3,15 @@ NAME				:=	philo
 CC					:=	gcc
 
 CFLAGS				:=	-Wall -Werror -Wextra -g
-# CFLAGS				+=	-g -fsanitize=thread
-# CFLAGS				+=	-pthread
-CFLAGS				+=	-fsanitize=address
-# to check for data races
-# CFLAGS				+=	-fsanitize=thread
+# CFLAGS				+=	-fsanitize=address
 
-# LDFLAGS				:=	-g -fsanitize=thread
-LDFLAGS				+=	-lpthread -g
-# LDFLAGS				+=	-v
-LDFLAGS				+=	-fsanitize=address
+# CFLAGS				+=	-fsanitize=thread
+# CFLAGS				+=	-pthread
+
+# LDFLAGS				:=	-fsanitize=address
+
+# LDFLAGS				+=	-fsanitize=thread
+# LDFLAGS				+=	-lpthread
 
 SRCS				:=	./main.c \
 						./src/init_data.c \

@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:58:30 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/05 12:59:21 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 17:34:32 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	main(int argc, char **argv)
 	destroy_and_free(&data);
 	return (EXIT_SUCCESS);
 }
+
+	// system("leaks philo");
 
 void	spawn_threads(t_data *data)
 {

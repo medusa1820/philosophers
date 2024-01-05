@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:50:42 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/05 14:43:51 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 15:21:03 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,6 @@ void	print_schedule(t_philo *philo, char *msg)
 	pthread_mutex_lock(&philo->data_from_philo->mutex_printf);
 	printf("%llu %d %s\n", time, philo->id, msg);
 	pthread_mutex_unlock(&philo->data_from_philo->mutex_printf);
-}
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	if (n == 0)
-		return (0);
-	i = 0;
-	while (*(s1 + i) == *(s2 + i) && *(s1 + i) != '\0')
-	{
-		if (i < n - 1)
-			i++;
-		else
-			return (0);
-	}
-	return (*((unsigned char *)s1 + i) - *((unsigned char *)s2 + i));
 }
 
 long	ft_atoi_philo(const char *str, bool *wrong_input)

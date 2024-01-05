@@ -20,7 +20,8 @@ SRCS				:=	./main.c \
 						./src/routines.c \
 						./src/set_get_funcs.c \
 						./src/time.c \
-						./src/utils.c
+						./src/utils0.c \
+						./src/utils1.c
 
 # HEADERS				:=	-I ../../LeakSanitizer
 HEADERS				+=	-I ./include

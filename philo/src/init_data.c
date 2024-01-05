@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:00:30 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/05 13:03:19 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 13:51:10 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ that this function is correctly implemented.
 
 */
 
-// void	init_data(int argc, char **argv, t_data *data)
 bool	init_data_succeeded(int argc, char **argv, t_data *data)
 {
 	int	i;
@@ -72,7 +71,6 @@ bool	init_data_succeeded(int argc, char **argv, t_data *data)
 	return (true);
 }
 
-// void	parse_input(int argc, char **argv, t_data *data)
 bool	parse_input_succeedeed(int argc, char **argv, t_data *data)
 {
 	bool	wrong_input;

@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:50:42 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/05 13:08:51 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 14:43:51 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,34 +64,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (*((unsigned char *)s1 + i) - *((unsigned char *)s2 + i));
 }
-
-/* int	ft_atoi(const char *str)
-{
-	int	i;
-	int	sign;
-	int	output;
-
-	i = 0;
-	sign = 1;
-	while ((*(str + i) >= 9 && *(str + i) <= 13) || *(str + i) == ' ')
-		i++;
-	if (*(str + i) == '-')
-		sign = -1;
-	if (*(str + i) == '-' || *(str + i) == '+')
-		i++;
-	output = 0;
-	while (*(str + i) >= '0' && *(str + i) <= '9')
-	{
-		output = output * 10 + (*(str + i) - '0');
-		if (output < 0 && sign == 1)
-			return (-1);
-		if (output < 0 && sign == -1 && output != -2147483648)
-			return (0);
-		i++;
-	}
-	return (output * sign);
-}
- */
 
 long	ft_atoi_philo(const char *str, bool *wrong_input)
 {

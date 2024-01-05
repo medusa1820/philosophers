@@ -6,13 +6,70 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 15:18:16 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/04 18:04:07 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 14:30:42 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 void	*routine_philo(void *ph)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)ph;
+	if (philo->data_from_philo->nr_of_philos == 1)
+		return (philo_took_first_fork(philo), philo_drop_fork(philo), NULL);
+	if (philo->id % 2 == 1)
+		my_sleep(philo->data_from_philo->time_to_eat / 2);
+	while (get_philo_status(philo) != DEAD)
+	{
+/* 		if (!philo_took_first_fork(philo))
+			return (NULL);
+		if (!philo_took_second_fork(philo))
+			return (NULL);
+		print_schedule(philo, "is eating");
+		set_last_eat_time(philo);
+		set_philo_status(EATING, philo);
+		if (stop_iterating(philo->data_from_philo))
+			return (philo_dropped_forks(philo), NULL);
+		my_sleep(philo->data_from_philo->time_to_eat);
+		philo_dropped_forks(philo);
+		philo->nr_has_eaten += 1; */
+		if (!philo_is_eating(philo))
+			return (NULL);
+		if (stop_iterating(philo->data_from_philo))
+			return (NULL);
+		print_schedule(philo, "is sleeping");
+		set_philo_status(ALIVE, philo);
+		my_sleep(philo->data_from_philo->time_to_sleep);
+		if (stop_iterating(philo->data_from_philo))
+			return (NULL);
+		print_schedule(philo, "is thinking");
+		set_philo_status(ALIVE, philo);
+		my_sleep((philo->data_from_philo->time_to_die - get_time() + \
+					philo->last_eat_time) * 7 / 10);
+	}
+	return (NULL);
+}
+
+bool	philo_is_eating(t_philo *philo)
+{
+	if (!philo_took_first_fork(philo))
+		return (false);
+	if (!philo_took_second_fork(philo))
+		return (false);
+	print_schedule(philo, "is eating");
+	set_last_eat_time(philo);
+	set_philo_status(EATING, philo);
+	if (stop_iterating(philo->data_from_philo))
+		return (philo_dropped_forks(philo), false);
+	my_sleep(philo->data_from_philo->time_to_eat);
+	philo_dropped_forks(philo);
+	philo->nr_has_eaten += 1;
+	return (true);
+}
+
+/* void	*routine_philo(void *ph)
 {
 	t_philo	*philo;
 
@@ -47,7 +104,7 @@ void	*routine_philo(void *ph)
 		my_sleep((philo->data_from_philo->time_to_die - get_time() + philo->last_eat_time) * 7 / 10);
 	}
 	return (NULL);
-}
+} */
 
 void	unlock_all_mutexes(t_philo *philo)
 {

@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:58:53 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/05 13:16:12 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 14:18:26 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void				*routine_check_philos_full(void *data_struct);
 void				unlock_all_mutexes(t_philo *philo);
 bool				stop_iterating(t_data *data);
 void				set_stop_iterating(t_data *data);
+bool				philo_is_eating(t_philo *philo);
 
 // set_get_funcs.c
 

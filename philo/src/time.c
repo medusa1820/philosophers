@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:18:55 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/03 21:38:14 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 13:51:59 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,4 @@ u_int64_t	get_time(void)
 	if (gettimeofday(&tv, NULL))
 		return (0);
 	return ((tv.tv_sec * (u_int64_t)1000) + (tv.tv_usec / 1000));
-}
-
-u_int64_t	get_time_for_schedule(void)
-{
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL))
-		return (0);
-	// return ((tv.tv_sec * (u_int64_t)1000) + (tv.tv_usec / 1000));
-	return ((tv.tv_sec * (u_int64_t)1000));
 }

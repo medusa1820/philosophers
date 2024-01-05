@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:18:55 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/05 13:51:59 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 15:47:56 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ millisecond precision and getting the current time in milliseconds.
 	with `nanosleep` or similar functions for more modern and potentially 
 	more precise timing control.
 
+	This condition in while loop creates incorrect timing due to dividing 
+	by 1000 the difference "now.tv_usec - start.tv_usec". 
+
+	while ((now.tv_sec - start.tv_sec) * 1000 + \
+			(now.tv_usec - start.tv_usec) / 1000 < ms)
+
+	This approache makes timestamps more correct
+
+	while ((now.tv_sec - start.tv_sec) * 1000 + \
+			(now.tv_usec / 1000) - (start.tv_usec / 1000) < ms)
+
 */
 
 void	my_sleep(int ms)
@@ -46,7 +57,7 @@ void	my_sleep(int ms)
 	gettimeofday(&start, NULL);
 	gettimeofday(&now, NULL);
 	while ((now.tv_sec - start.tv_sec) * 1000 + \
-			(now.tv_usec - start.tv_usec) / 1000 < ms)
+			(now.tv_usec / 1000) - (start.tv_usec / 1000) < ms)
 	{
 		usleep(100);
 		gettimeofday(&now, NULL);

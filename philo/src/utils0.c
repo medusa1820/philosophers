@@ -6,11 +6,12 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:50:42 by musenov           #+#    #+#             */
-/*   Updated: 2024/01/05 18:34:26 by musenov          ###   ########.fr       */
+/*   Updated: 2024/01/05 20:13:43 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <limits.h>
 
 int	wrong_nr_params(void)
 {
@@ -70,6 +71,11 @@ long	ft_atoi_philo(const char *str, bool *wrong_input)
 			output = output * 10 + (str[i] - '0');
 		else
 			*wrong_input = true;
+		if (output > INT_MAX || output < INT_MIN)
+		{
+			*wrong_input = true;
+			return (0);
+		}
 		i++;
 	}
 	return (output);

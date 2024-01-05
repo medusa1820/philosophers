@@ -25,7 +25,7 @@ SRCS				:=	./main.c \
 HEADERS				:=	-I ../../LeakSanitizer
 HEADERS				+=	-I ./include
 
-LDFLAGS				+=	-L ../../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next
+# LDFLAGS				+=	-L ../../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next
 
 OBJS				:=	$(SRCS:.c=.o)
 
@@ -45,7 +45,10 @@ fclean: clean
 clean:
 	rm -f $(OBJS)
 
-check:
-	@valgrind	./philo 5 500 200 150
+helgrind:
+	@valgrind	--tool=helgrind -s ./philo 201 100 20 10
 
-.PHONY: all clean fclean re check
+drd:
+	@valgrind	--tool=drd -s ./philo 201 100 20 10
+
+.PHONY: all clean fclean re helgrind drd
